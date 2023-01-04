@@ -1,4 +1,6 @@
-﻿using FitnessFoodsLC.Interface.Context;
+﻿using FitnessFoodsLC.Context.EntityTypeConfiguration;
+using FitnessFoodsLC.Domain.Products;
+using FitnessFoodsLC.Interface.Context;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -12,12 +14,15 @@ namespace FitnessFoodsLC.Context
 {
     public class FitnessFoodsLCContext : DbContext, IFitnessFoodsLCContext
     {
-        public FitnessFoodsLCContext(DbContextOptions options) : base(options)
+        public DbSet<Product> Products { get; set; }
+
+        public FitnessFoodsLCContext(DbContextOptions<FitnessFoodsLCContext> options) : base(options)
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new ProductTypeConfiguration());
         }
     }
 }

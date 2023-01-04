@@ -1,4 +1,7 @@
 ﻿using FitnessFoodsLC.Context;
+using FitnessFoodsLC.Domain.Products;
+
+using Microsoft.EntityFrameworkCore;
 
 using System;
 using System.Collections.Generic;
@@ -10,5 +13,6 @@ namespace FitnessFoodsLC.Interface.Context
 {
     public interface IFitnessFoodsLCContext : IDbContext
     {
+        public DbSet<Product> Products { get; }
     }
 }

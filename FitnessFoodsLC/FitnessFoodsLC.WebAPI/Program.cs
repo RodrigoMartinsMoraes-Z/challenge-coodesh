@@ -23,7 +23,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<IFitnessFoodsLCContext, FitnessFoodsLCContext>(
     options =>
     {
-        options.UseNpgsql(configuration.GetConnectionString("FitnessFoodsLC"), b => b.MigrationsAssembly("FitnessFoodsLC.WebAPI"));
+        options.UseNpgsql(configuration.GetConnectionString("FitnessFoodsLC"), b => b.MigrationsAssembly("FitnessFoodsLC.Context"));
     },
     ServiceLifetime.Scoped);
 
