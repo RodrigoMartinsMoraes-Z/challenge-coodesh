@@ -1,5 +1,9 @@
 using FitnessFoodsLC.Context;
+using FitnessFoodsLC.Domain.Products;
+using FitnessFoodsLC.Interface;
 using FitnessFoodsLC.Interface.Context;
+using FitnessFoodsLC.Repository;
+using FitnessFoodsLC.Service;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +30,12 @@ builder.Services.AddDbContext<IFitnessFoodsLCContext, FitnessFoodsLCContext>(
         options.UseNpgsql(configuration.GetConnectionString("FitnessFoodsLC"), b => b.MigrationsAssembly("FitnessFoodsLC.Context"));
     },
     ServiceLifetime.Scoped);
+#region Interfaces
 
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IOpenFoods, OpenFoods>();
+
+#endregion
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

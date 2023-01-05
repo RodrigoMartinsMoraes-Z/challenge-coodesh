@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FitnessFoodsLC.Interface\FitnessFoodsLC.Interface.csproj" />
+  </ItemGroup>
+
 </Project>

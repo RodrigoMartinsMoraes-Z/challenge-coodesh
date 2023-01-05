@@ -23,6 +23,8 @@
   <ItemGroup>
     <ProjectReference Include="..\FitnessFoodsLC.Context\FitnessFoodsLC.Context.csproj" />
     <ProjectReference Include="..\FitnessFoodsLC.Interface\FitnessFoodsLC.Interface.csproj" />
+    <ProjectReference Include="..\FitnessFoodsLC.Repository\FitnessFoodsLC.Repository.csproj" />
+    <ProjectReference Include="..\FitnessFoodsLC.Service\FitnessFoodsLC.Service.csproj" />
   </ItemGroup>
 
 </Project>

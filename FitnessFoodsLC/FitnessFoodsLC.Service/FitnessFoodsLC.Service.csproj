@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="cloudscribe.HtmlAgilityPack" Version="1.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FitnessFoodsLC.Interface\FitnessFoodsLC.Interface.csproj" />
+  </ItemGroup>
+
 </Project>
