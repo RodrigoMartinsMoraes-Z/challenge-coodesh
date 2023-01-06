@@ -29,20 +29,14 @@ namespace FitnessFoodsLC.WebAPI.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult> Challenge()
-        {
-            return Ok("Fullstack Challenge 20201026");
-        }
+        public async Task<ActionResult> Challenge() => Ok("Fullstack Challenge 20201026");
 
         [HttpGet]
         [Route("{code}")]
-        public async Task<ActionResult> FindByCode(long code)
-        {
-            return Ok(await _productRepository.FindByCode(code));
-        }
+        public async Task<ActionResult> FindByCode(long code) => Ok(await _productRepository.FindByCode(code));
 
         [HttpGet]
-        [Route("{page}/{maxItens}")]
+        [Route("GetList/{page}/{maxItens}")]
         public async Task<ActionResult> GetList(int page, int maxItens)
         {
             if (page <= 0)
@@ -56,7 +50,7 @@ namespace FitnessFoodsLC.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{page}")]
+        [Route("GetList/{page}")]
         public async Task<ActionResult> GetList(int page)
         {
             if (page <= 0)
@@ -67,15 +61,7 @@ namespace FitnessFoodsLC.WebAPI.Controllers
 
         }
         [HttpGet]
-        [Route("")]
-        public async Task<ActionResult> GetList()
-        {
-            if (page <= 0)
-                page = 1;
-
-
-            return Ok(await _productRepository.GetList());
-
-        }
+        [Route("GetList")]
+        public async Task<ActionResult> GetList() => Ok(await _productRepository.GetList());
     }
 }
