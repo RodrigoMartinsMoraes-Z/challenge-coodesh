@@ -7,6 +7,8 @@ using FitnessFoodsLC.Service;
 
 using Microsoft.EntityFrameworkCore;
 
+using System.Runtime.CompilerServices;
+
 var builder = WebApplication.CreateBuilder(args);
 
 string projectPath = AppDomain.CurrentDomain.BaseDirectory.Split(new string[] { @"bin\" }, StringSplitOptions.None)[0];
@@ -36,7 +38,17 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IOpenFoods, OpenFoods>();
 
 #endregion
+
 var app = builder.Build();
+
+#region CRON
+var url = configuration.GetValue<string>("BaseUrl");
+var schedule = configuration.GetValue<string>("Schedule");
+
+var cron = new ScheduledService(url, schedule);
+var cancelationToken = new CancellationToken();
+cron.StartAsync(cancelationToken);
+#endregion
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
