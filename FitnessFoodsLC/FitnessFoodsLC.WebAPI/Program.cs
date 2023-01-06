@@ -41,11 +41,11 @@ builder.Services.AddScoped<IOpenFoods, OpenFoods>();
 
 var app = builder.Build();
 
+var baseUrl = configuration.GetValue<string>("BaseUrl");
 #region CRON
-var url = configuration.GetValue<string>("BaseUrl");
 var schedule = configuration.GetValue<string>("Schedule");
 
-var cron = new ScheduledService(url, schedule);
+var cron = new ScheduledService(baseUrl, schedule);
 var cancelationToken = new CancellationToken();
 cron.StartAsync(cancelationToken);
 #endregion
@@ -56,6 +56,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UsePathBase(baseUrl);
 
 app.UseHttpsRedirection();
 
