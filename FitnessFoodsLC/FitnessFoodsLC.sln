@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33103.201
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessFoodsLC.WebAPI", "FitnessFoodsLC.WebAPI\FitnessFoodsLC.WebAPI.csproj", "{3B864B6D-B573-4010-A649-2A6A6E3670C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessFoodsLC.WebAPI", "FitnessFoodsLC.WebAPI\FitnessFoodsLC.WebAPI.csproj", "{3B864B6D-B573-4010-A649-2A6A6E3670C7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{D00627FF-41A6-4A87-9454-57605B90DCC1}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,21 +16,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{411F55CD-3
 		..\..\challenge-20220626-master\docs\api.yml = ..\..\challenge-20220626-master\docs\api.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessFoodsLC.Web", "FitnessFoodsLC.Web\FitnessFoodsLC.Web.csproj", "{5B8CE95A-BE44-4E31-B27F-D49FD2D061A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessFoodsLC.Domain", "FitnessFoodsLC.Domain\FitnessFoodsLC.Domain.csproj", "{BDA301A5-F563-4865-B964-3E89BEFD820C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessFoodsLC.Domain", "FitnessFoodsLC.Domain\FitnessFoodsLC.Domain.csproj", "{BDA301A5-F563-4865-B964-3E89BEFD820C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessFoodsLC.Context", "FitnessFoodsLC.Context\FitnessFoodsLC.Context.csproj", "{55956A6F-01D5-423E-B450-243A73A963E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessFoodsLC.Context", "FitnessFoodsLC.Context\FitnessFoodsLC.Context.csproj", "{55956A6F-01D5-423E-B450-243A73A963E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessFoodsLC.Service", "FitnessFoodsLC.Service\FitnessFoodsLC.Service.csproj", "{259D0C46-7E55-466F-98DB-F683ECD0287C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessFoodsLC.Service", "FitnessFoodsLC.Service\FitnessFoodsLC.Service.csproj", "{259D0C46-7E55-466F-98DB-F683ECD0287C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessFoodsLC.CrossCutting", "FitnessFoodsLC.CrossCutting\FitnessFoodsLC.CrossCutting.csproj", "{E1FC8EB2-6F39-4AA7-9876-D22FF370D7B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessFoodsLC.CrossCutting", "FitnessFoodsLC.CrossCutting\FitnessFoodsLC.CrossCutting.csproj", "{E1FC8EB2-6F39-4AA7-9876-D22FF370D7B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessFoodsLC.Models", "FitnessFoodsLC.Models\FitnessFoodsLC.Models.csproj", "{E1475E97-2AD7-4FC6-937B-7F4DD05CAF24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessFoodsLC.Models", "FitnessFoodsLC.Models\FitnessFoodsLC.Models.csproj", "{E1475E97-2AD7-4FC6-937B-7F4DD05CAF24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessFoodsLC.Interface", "FitnessFoodsLC.Interface\FitnessFoodsLC.Interface.csproj", "{F5FBA681-D2B2-422E-9E14-7D328B4D9405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessFoodsLC.Interface", "FitnessFoodsLC.Interface\FitnessFoodsLC.Interface.csproj", "{F5FBA681-D2B2-422E-9E14-7D328B4D9405}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessFoodsLC.Repository", "FitnessFoodsLC.Repository\FitnessFoodsLC.Repository.csproj", "{FA488C26-4876-409C-8E8F-52028957A1E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessFoodsLC.Repository", "FitnessFoodsLC.Repository\FitnessFoodsLC.Repository.csproj", "{FA488C26-4876-409C-8E8F-52028957A1E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,10 +40,6 @@ Global
 		{3B864B6D-B573-4010-A649-2A6A6E3670C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B864B6D-B573-4010-A649-2A6A6E3670C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B864B6D-B573-4010-A649-2A6A6E3670C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B8CE95A-BE44-4E31-B27F-D49FD2D061A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B8CE95A-BE44-4E31-B27F-D49FD2D061A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B8CE95A-BE44-4E31-B27F-D49FD2D061A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B8CE95A-BE44-4E31-B27F-D49FD2D061A6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BDA301A5-F563-4865-B964-3E89BEFD820C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BDA301A5-F563-4865-B964-3E89BEFD820C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDA301A5-F563-4865-B964-3E89BEFD820C}.Release|Any CPU.ActiveCfg = Release|Any CPU

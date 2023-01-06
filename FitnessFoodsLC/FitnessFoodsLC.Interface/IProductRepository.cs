@@ -12,5 +12,7 @@ namespace FitnessFoodsLC.Interface
     {
         Task<bool> Exist(string url);
         Task Add(Product product);
+        Task<Product?> FindByCode(long code);
+        Task<IQueryable<Product>> GetList(int page = 1, int quantity = 100);
     }
 }

@@ -26,6 +26,10 @@ namespace FitnessFoodsLC.Service
             _productRepository = productRepository;
         }
 
+        /// <summary>
+        /// Get a list of foods and add to database
+        /// </summary>
+        /// <returns></returns>
         public async Task GetFoods()
         {
             int page = 1;
@@ -41,8 +45,6 @@ namespace FitnessFoodsLC.Service
                 productsUrlToAdd.AddRange(await GetProductUrl(page, initUrl, endUrl, maxItens - productsUrlToAdd.Count));
             }
 
-            //Parallel.ForEach(productsUrlToAdd, async productUrl => await GetFoodInfo(_openFoodUrl + productUrl));
-
             foreach (var productUrl in productsUrlToAdd)
             {
                 await GetFoodInfo(_openFoodUrl + productUrl);
@@ -50,6 +52,14 @@ namespace FitnessFoodsLC.Service
 
         }
 
+        /// <summary>
+        /// Get the Url of each product in a page
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="initUrl"></param>
+        /// <param name="endUrl"></param>
+        /// <param name="maxItens"></param>
+        /// <returns></returns>
         private async Task<List<string>> GetProductUrl(int page, string initUrl, string endUrl, int maxItens)
         {
             List<HtmlNode> productLinks = await GetProductsLink(page);
@@ -75,6 +85,11 @@ namespace FitnessFoodsLC.Service
             return productsUrlToAdd;
         }
 
+        /// <summary>
+        /// Get the HTML that contains a link of the product
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
         private async Task<List<HtmlNode>> GetProductsLink(int page)
         {
             HttpClient client = new();
@@ -89,6 +104,11 @@ namespace FitnessFoodsLC.Service
             return productLinks;
         }
 
+        /// <summary>
+        /// Get the info of a product 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public async Task GetFoodInfo(string url)
         {
             HttpClient client = new();
@@ -153,7 +173,13 @@ namespace FitnessFoodsLC.Service
             await Task.CompletedTask;
         }
 
-        private Task<string?> GetPropertieValue(HtmlNode? propertie, string propertieName)
+        /// <summary>
+        /// Get the value of propertie of a product
+        /// </summary>
+        /// <param name="propertie"></param>
+        /// <param name="propertieName"></param>
+        /// <returns></returns>
+        private static Task<string?> GetPropertieValue(HtmlNode? propertie, string propertieName)
         {
             if (propertie != null)
             {

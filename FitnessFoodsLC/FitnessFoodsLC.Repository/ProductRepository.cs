@@ -21,15 +21,16 @@ namespace FitnessFoodsLC.Repository
             _context = context;
         }
 
-        public async Task<bool> Exist(string url)
-        {
-            return  _context.Products.Any(p => p.Url.Contains(url));
-        }
+        public Task<bool> Exist(string url) => Task.FromResult(_context.Products.Any(p => p.Url.Contains(url)));
 
         public async Task Add(Product product)
         {
             await _context.Products.AddAsync(product);
             _context.SaveChanges();
         }
+
+        public Task<Product?> FindByCode(long code) => Task.FromResult(_context.Products.FirstOrDefault(p => p.Code == code));
+
+        public Task<IQueryable<Product>> GetList(int page = 1, int quantity = 100) => Task.FromResult(_context.Products.Skip((page -1) * quantity).Take(quantity));
     }
 }
