@@ -1,4 +1,5 @@
-﻿using FitnessFoodsLC.Interface;
+﻿using FitnessFoodsLC.Domain.Products;
+using FitnessFoodsLC.Interface;
 using FitnessFoodsLC.Interface.Context;
 
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,13 @@ namespace FitnessFoodsLC.Repository
 
         public async Task<bool> Exist(string url)
         {
-            return  _context.Products.Any(p => p.Url.Equals(url));
+            return  _context.Products.Any(p => p.Url.Contains(url));
+        }
+
+        public async Task Add(Product product)
+        {
+            await _context.Products.AddAsync(product);
+            _context.SaveChanges();
         }
     }
 }

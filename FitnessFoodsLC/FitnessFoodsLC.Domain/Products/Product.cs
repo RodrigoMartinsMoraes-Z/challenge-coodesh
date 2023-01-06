@@ -10,9 +10,9 @@ namespace FitnessFoodsLC.Domain.Products
 {
     public class Product
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
-        public int? Code { get; set; }
+        public long? Code { get; set; }
 
         public string? Barcode { get; set; }
 

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FitnessFoodsLC.Context.Migrations
 {
     [DbContext(typeof(FitnessFoodsLCContext))]
-    [Migration("20230104145533_initial-migration")]
+    [Migration("20230105191929_initial-migration")]
     partial class initialmigration
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace FitnessFoodsLC.Context.Migrations
 
             modelBuilder.Entity("FitnessFoodsLC.Domain.Products.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Barcode")
                         .HasColumnType("text");
@@ -42,8 +42,8 @@ namespace FitnessFoodsLC.Context.Migrations
                     b.Property<string>("Categories")
                         .HasColumnType("text");
 
-                    b.Property<int?>("Code")
-                        .HasColumnType("integer");
+                    b.Property<long?>("Code")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");

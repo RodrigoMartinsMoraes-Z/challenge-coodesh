@@ -16,9 +16,9 @@ namespace FitnessFoodsLC.Context.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Code = table.Column<int>(type: "integer", nullable: true),
+                    Code = table.Column<long>(type: "bigint", nullable: true),
                     Barcode = table.Column<string>(type: "text", nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: true),
                     ImportedT = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FitnessFoodsLC.Domain.Products;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +11,6 @@ namespace FitnessFoodsLC.Interface
     public interface IProductRepository
     {
         Task<bool> Exist(string url);
+        Task Add(Product product);
     }
 }

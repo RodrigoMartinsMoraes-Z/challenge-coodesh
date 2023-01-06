@@ -1,5 +1,6 @@
 ﻿using cloudscribe.HtmlAgilityPack;
 
+using FitnessFoodsLC.Domain.Products;
 using FitnessFoodsLC.Interface;
 
 using Microsoft.Extensions.Configuration;
@@ -25,11 +26,59 @@ namespace FitnessFoodsLC.Service
             _productRepository = productRepository;
         }
 
-
         public async Task GetFoods()
         {
+            int page = 1;
+            int maxItens = 100;
+
+            string initUrl = "/product";
+            string endUrl = "\" title=\"";
+            List<string> productsUrlToAdd = await GetProductUrl(page, initUrl, endUrl, maxItens);
+
+            while (productsUrlToAdd.Count < maxItens)
+            {
+                page++;
+                productsUrlToAdd.AddRange(await GetProductUrl(page, initUrl, endUrl, maxItens - productsUrlToAdd.Count));
+            }
+
+            //Parallel.ForEach(productsUrlToAdd, async productUrl => await GetFoodInfo(_openFoodUrl + productUrl));
+
+            foreach (var productUrl in productsUrlToAdd)
+            {
+                await GetFoodInfo(_openFoodUrl + productUrl);
+            }
+
+        }
+
+        private async Task<List<string>> GetProductUrl(int page, string initUrl, string endUrl, int maxItens)
+        {
+            List<HtmlNode> productLinks = await GetProductsLink(page);
+
+            List<string> productsUrlToAdd = new();
+            foreach (var productUrl in productLinks)
+            {
+                if (productsUrlToAdd.Count >= maxItens)
+                    break;
+
+                var html = productUrl.InnerHtml;
+                var fistIndex = html.IndexOf(initUrl);
+                var subHtml = html[fistIndex..];
+                var lastIndex = subHtml.LastIndexOf(endUrl);
+                var url = subHtml[0..lastIndex];
+                var exist = _productRepository.Exist(url).Result;
+                if (!exist)
+                {
+                    productsUrlToAdd.Add(url);
+                }
+            }
+
+            return productsUrlToAdd;
+        }
+
+        private async Task<List<HtmlNode>> GetProductsLink(int page)
+        {
             HttpClient client = new();
-            var response = await client.GetStringAsync(_openFoodUrl);
+            var response = await client.GetStringAsync(_openFoodUrl + '/' + page);
 
             HtmlDocument htmlDoc = new();
             htmlDoc.LoadHtml(response);
@@ -37,27 +86,7 @@ namespace FitnessFoodsLC.Service
             var productLinks = htmlDoc.DocumentNode.Descendants("li")
                 .Where(nodes => nodes.InnerHtml.Contains("product/"))
                 .ToList();
-
-            string initUrl = "/product";
-            string endUrl = "\" title=\"";
-            List<string> productsUrlToAdd = new();
-            productsUrlToAdd.AddRange(from product in productLinks
-                                   let html = product.InnerHtml
-                                   let fistIndex = html.IndexOf(initUrl)
-                                   let subHtml = html[fistIndex..]
-                                   let lastIndex = subHtml.LastIndexOf(endUrl)
-                                   let url = subHtml[0..lastIndex]
-                                   let exist = _productRepository.Exist(url).Result
-                                   where !exist
-                                   select url);
-
-            //Parallel.ForEach(productsUrlToAdd, async productUrl => await GetFoodInfo(_openFoodUrl + productUrl));
-
-            foreach(var productUrl in productsUrlToAdd)
-            {
-                await GetFoodInfo(_openFoodUrl + productUrl);
-            }
-
+            return productLinks;
         }
 
         public async Task GetFoodInfo(string url)
@@ -71,26 +100,55 @@ namespace FitnessFoodsLC.Service
             var info = htmlDoc.DocumentNode.Descendants("p").ToList();
 
             var barCode = await GetPropertieValue(
-                info.FirstOrDefault(i => i.Id == "barcode_paragraph"), 
+                info.FirstOrDefault(i => i.Id == "barcode_paragraph"),
                 "Barcode:");
-            var code = barCode.Split(' ')[0];
+
+            var codeString = barCode?.Split(' ')[0];
+            long? code = null;
+
+            if (codeString != null && codeString.Length > 0)
+                code = long.Parse(codeString);
+
             var name = await GetPropertieValue(
                 info.FirstOrDefault(i => i.Id == "field_generic_name"),
                 "Common name:");
+
             var quantity = await GetPropertieValue(
                 info.FirstOrDefault(i => i.Id == "field_quantity"),
                 "Quantity:");
+
             var categories = await GetPropertieValue(
                 info.FirstOrDefault(i => i.Id == "field_categories"),
                 "Categories:");
+
             var packaging = await GetPropertieValue(
                 info.FirstOrDefault(i => i.Id == "field_packaging"),
                 "Packaging:");
+
             var brands = await GetPropertieValue(
                 info.FirstOrDefault(i => i.Id == "field_brands"),
                 "Brands:");
 
-            var image = htmlDoc.DocumentNode.Descendants("img").First(i => i.Id == "og_image");
+            var imageUrl = htmlDoc.DocumentNode.Descendants("img")
+                .FirstOrDefault(i => i.Id == "og_image")?.Attributes
+                .FirstOrDefault(a => a.Value.Contains("images.openfoodfacts.org"))?.Value;
+
+            var product = new Product
+            {
+                Barcode = barCode,
+                Code = code,
+                ProductName = name,
+                Quantity = quantity,
+                Categories = categories,
+                Packaging = packaging,
+                Brands = brands,
+                ImageUrl = imageUrl,
+                Url = url,
+                ImportedT = DateTime.Now.ToUniversalTime(),
+                Status = CrossCutting.Enums.Status.imported
+            };
+
+            await _productRepository.Add(product);
 
             await Task.CompletedTask;
         }
